@@ -1,0 +1,327 @@
+/* 
+  Global Stylesheet for College Utilities Web App
+  Theme: Dark Glassmorphism (Inspired by OpenSource Camp)
+*/
+
+:root {
+  /* Color Palette - Dark Glass Theme */
+  --background-color: #000000;
+  --text-color: #ffffff;
+  --text-secondary: #e5e5e5;
+  --text-muted: #a3a3a3;
+
+  /* Brand Colors (Orange Gradient) */
+  --primary-color: #f97316;
+  --primary-dark: #ea580c;
+  --gradient-start: #fb923c;
+  --gradient-end: #ea580c;
+
+  /* Glass Effects */
+  --card-bg-color: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --nav-bg: rgba(0, 0, 0, 0.8);
+
+  /* Compatibility */
+  --text-light: var(--text-muted);
+
+  --border-radius: 12px;
+  --transition-speed: 0.3s;
+}
+
+/* Reset Defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-image: url('../assets/images/pexels-codioful-7135029.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--text-color);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Header & Navigation */
+header {
+  background-color: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.nav-center {
+  display: none;
+  /* Hidden on small screens if needed, but for now show it */
+  align-items: center;
+  gap: 0.5rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 768px) {
+  .nav-center {
+    display: flex;
+  }
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all var(--transition-speed);
+}
+
+.nav-links a:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Layout */
+main {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  min-height: 80vh;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  /* Glow effect */
+  text-shadow: 0 0 30px rgba(249, 115, 22, 0.3);
+}
+
+/* Typography Overrides */
+p {
+  color: var(--text-secondary);
+}
+
+/* Cards Grid */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: var(--card-bg-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--glass-border);
+  flex: 1 1 300px;
+  max-width: 350px;
+  text-align: center;
+  transition: transform var(--transition-speed), border-color var(--transition-speed);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(249, 115, 22, 0.5);
+  /* Orange border on hover */
+}
+
+.card h3 {
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.card p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  background: #8B0000;
+  border: 1px solid var(--glass-border);
+  color: white;
+  padding: 0.8rem 1.8rem;
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all var(--transition-speed);
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: white;
+  box-shadow: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--background-color);
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  margin-top: 4rem;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: white;
+  transition: all 0.2s;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+}
+
+/* Table Styles (for Timetable) */
+.table-container {
+  overflow-x: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--glass-border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+}
+
+th {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+/* Animations from OpenSource Camp (Simplified) */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main {
+  animation: fadeIn 0.6s ease-out;
+}
