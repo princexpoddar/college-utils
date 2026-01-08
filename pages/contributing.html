@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributing Guidelines - CollegeUtils</title>
+    <meta name="description"
+        content="Learn how to contribute to CollegeUtils - an open source project by IEEE Student Branch">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .contributing-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .guidelines-section {
+            background-color: var(--card-bg-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .guidelines-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .guidelines-section h3 {
+            color: white;
+            margin: 1.5rem 0 0.75rem 0;
+            font-size: 1.2rem;
+        }
+
+        .guidelines-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .guidelines-section ul,
+        .guidelines-section ol {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .guidelines-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
+        .guidelines-section code {
+            background-color: rgba(249, 115, 22, 0.2);
+            color: var(--primary-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(234, 88, 12, 0.05));
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-right: 0.75rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-beginner {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-intermediate {
+            background-color: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+            border: 1px solid rgba(249, 115, 22, 0.3);
+        }
+
+        .badge-advanced {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tool-item {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tool-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .tool-item.claimed {
+            opacity: 0.5;
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        .tool-item h4 {
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-item span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(234, 88, 12, 0.05));
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                <span style="color: white; font-weight: 700; font-size: 1rem;">OpenSource Camp</span>
+                <img src="../assets/ieee logo.png" alt="IEEE Logo" style="height: 36px; width: auto;">
+            </div>
+
+            <div class="nav-center">
+                <span style="font-size: 1.5rem; font-weight: 700; color: #ffffff;">CollegeUtils</span>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="contributing.html">Contributing</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1 class="page-title">Contributing Guidelines</h1>
+        <p style="text-align: center; margin-bottom: 3rem; font-size: 1.2rem;">
+            Welcome to OpenSource Camp! Here's everything you need to start contributing.
+        </p>
+
+        <div class="contributing-container">
+
+            <!-- Welcome Section -->
+            <section class="guidelines-section">
+                <h2>Welcome to OpenSource Camp</h2>
+                <p>
+                    Thank you for your interest in contributing to CollegeUtils! This project is organized by
+                    <strong>ABV-IIITM IEEE Student Branch</strong> as part of our OpenSource Camp initiative.
+                    Whether you're a beginner or an experienced developer, there's a place for you here.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>What is OpenSource Camp?</strong><br>
+                        OpenSource Camp is a hands-on event where students learn to contribute to open source
+                        projects. CollegeUtils is a collection of utility tools built entirely by contributors like you!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Getting Started -->
+            <section class="guidelines-section">
+                <h2>Getting Started</h2>
+
+                <h3><span class="step-number">1</span>Fork the Repository</h3>
+                <p>
+                    Go to the GitHub repository and click the <strong>Fork</strong> button in the top right corner.
+                    This creates your own copy of the project.
+                </p>
+
+                <h3><span class="step-number">2</span>Clone Your Fork</h3>
+                <div class="code-block">
+                    git clone https://github.com/YOUR-USERNAME/college-utils.git<br>
+                    cd college-utils
+                </div>
+
+                <h3><span class="step-number">3</span>Create an Issue (Claim Your Tool)</h3>
+                <div class="highlight-box">
+                    <p>
+                        <strong>⚠️ Important:</strong> You must create an issue before starting work!
+                        This prevents duplicate work and helps maintainers track contributions.
+                    </p>
+                </div>
+                <p>
+                    Go to the <strong>Issues</strong> tab on GitHub and click <strong>"New Issue"</strong>.
+                    Choose from these templates:
+                </p>
+                <ul>
+                    <li><strong>🛠️ Build a Tool</strong> — Pick an existing tool (CGPA, Attendance, etc.)</li>
+                    <li><strong>💡 Propose a New Idea</strong> — Claim an Idea slot and build your own tool!</li>
+                    <li><strong>🐛 Bug Report</strong> — Report any bugs you find</li>
+                </ul>
+                <p>
+                    Fill in the template details and submit. A maintainer will review and assign it to you.
+                    <strong>Wait for assignment before starting work!</strong>
+                </p>
+
+                <h3><span class="step-number">4</span>Create a Branch</h3>
+                <div class="code-block">
+                    git checkout -b feature/your-tool-name
+                </div>
+
+                <h3><span class="step-number">5</span>Make Your Changes</h3>
+                <p>
+                    Implement your feature following the coding guidelines below. Each tool has its own
+                    dedicated page in the <code>pages/</code> folder.
+                </p>
+
+                <h3><span class="step-number">6</span>Commit and Push</h3>
+                <div class="code-block">
+                    git add .<br>
+                    git commit -m "feat: Add [Your Tool Name]"<br>
+                    git push origin feature/your-tool-name
+                </div>
+
+                <h3><span class="step-number">7</span>Create a Pull Request</h3>
+                <p>
+                    Go to your fork on GitHub and click <strong>New Pull Request</strong>. Fill in the
+                    PR template with details about your implementation. Link it to your issue using
+                    <code>Closes #issue-number</code> in the description.
+                </p>
+            </section>
+
+            <!-- Technical Guidelines -->
+            <section class="guidelines-section">
+                <h2>Technical Guidelines</h2>
+
+                <h3>Allowed Technologies</h3>
+                <ul>
+                    <li><strong>HTML5</strong> - Structure your pages semantically</li>
+                    <li><strong>CSS3</strong> - Custom styles (use the existing <code>style.css</code> as base)</li>
+                    <li><strong>Vanilla JavaScript</strong> - No frameworks required, keep it simple!</li>
+                </ul>
+
+                <h3>File Structure</h3>
+                <div class="code-block">
+                    college-utils/<br>
+                    ├── index.html # Home page with tool cards<br>
+                    ├── css/<br>
+                    │ └── style.css # Global styles<br>
+                    ├── pages/<br>
+                    │ ├── cgpa.html # Example tool page<br>
+                    │ ├── idea1.html # Available for contribution<br>
+                    │ └── ...<br>
+                    ├── assets/<br>
+                    │ └── images/ # Images and icons<br>
+                    └── README.md
+                </div>
+
+                <h3>Coding Standards</h3>
+                <ul>
+                    <li>Use <strong>meaningful variable and function names</strong></li>
+                    <li>Add <strong>comments</strong> to explain complex logic</li>
+                    <li>Follow <strong>consistent indentation</strong> (2 or 4 spaces)</li>
+                    <li>Keep your code <strong>clean and readable</strong></li>
+                    <li>Test your tool <strong>thoroughly</strong> before submitting</li>
+                    <li>Ensure your tool is <strong>responsive</strong> and works on mobile</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Pro Tip:</strong> Look at existing tool pages (like <code>cgpa.html</code>)
+                        to understand the expected structure and styling patterns.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Available Tools -->
+            <section class="guidelines-section">
+                <h2>Available Tools to Build</h2>
+                <p>
+                    Each tool has a dedicated page. Pick one that interests you and check if there's
+                    an open issue for it!
+                </p>
+
+                <h3>Difficulty Levels</h3>
+                <p>
+                    <span class="badge badge-beginner">Beginner</span> Good for first-time contributors<br>
+                    <span class="badge badge-intermediate">Intermediate</span> Requires some JavaScript experience<br>
+                    <span class="badge badge-advanced">Advanced</span> Complex logic or multiple features
+                </p>
+
+                <h3>Core Tools</h3>
+                <div class="tools-grid">
+                    <div class="tool-item">
+                        <h4>CGPA Calculator</h4>
+                        <span class="badge badge-beginner">Beginner</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Attendance Tracker</h4>
+                        <span class="badge badge-intermediate">Intermediate</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Timetable Manager</h4>
+                        <span class="badge badge-intermediate">Intermediate</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Quick Notes</h4>
+                        <span class="badge badge-beginner">Beginner</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>To-Do List</h4>
+                        <span class="badge badge-beginner">Beginner</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Countdown Timer</h4>
+                        <span class="badge badge-beginner">Beginner</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Unit Converter</h4>
+                        <span class="badge badge-intermediate">Intermediate</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Expense Tracker</h4>
+                        <span class="badge badge-intermediate">Intermediate</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Password Strength</h4>
+                        <span class="badge badge-beginner">Beginner</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Typing Speed Test</h4>
+                        <span class="badge badge-intermediate">Intermediate</span>
+                    </div>
+                </div>
+
+                <h3>Idea Slots (Open for New Ideas!)</h3>
+                <p>
+                    These slots are reserved for contributors who want to propose and build their own
+                    unique tools. Get an issue assigned to claim your spot!
+                </p>
+                <div class="tools-grid">
+                    <div class="tool-item">
+                        <h4>Idea 1</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 2</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 3</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 4</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 5</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 6</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 7</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 8</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 9</h4>
+                        <span>Available</span>
+                    </div>
+                    <div class="tool-item">
+                        <h4>Idea 10</h4>
+                        <span>Available</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Commit Guidelines -->
+            <section class="guidelines-section">
+                <h2>Commit Message Guidelines</h2>
+                <p>Use clear and descriptive commit messages following this format:</p>
+
+                <div class="code-block">
+                    feat: Add CGPA Calculator functionality<br>
+                    fix: Fix calculation error in attendance tracker<br>
+                    style: Update button styling on home page<br>
+                    docs: Update README with setup instructions<br>
+                    refactor: Simplify timer logic
+                </div>
+
+                <h3>Commit Types</h3>
+                <ul>
+                    <li><code>feat</code> - New feature or enhancement</li>
+                    <li><code>fix</code> - Bug fix</li>
+                    <li><code>style</code> - CSS/UI changes</li>
+                    <li><code>docs</code> - Documentation updates</li>
+                    <li><code>refactor</code> - Code refactoring</li>
+                    <li><code>test</code> - Adding tests</li>
+                </ul>
+            </section>
+
+            <!-- Code of Conduct -->
+            <section class="guidelines-section">
+                <h2>Code of Conduct</h2>
+                <p>We are committed to providing a welcoming environment for everyone. Please:</p>
+                <ul>
+                    <li><strong>Be respectful</strong> of differing viewpoints and experiences</li>
+                    <li><strong>Give constructive feedback</strong> in a kind manner</li>
+                    <li><strong>Help others learn</strong> - we're all here to grow!</li>
+                    <li><strong>Ask questions</strong> - there are no stupid questions</li>
+                    <li><strong>Celebrate contributions</strong> of all sizes</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Need Help?</strong><br>
+                        Reach out to the organizers or mentors during the OpenSource Camp.
+                        We're here to guide you through your first contribution!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section class="guidelines-section">
+                <h2>Contact & Support</h2>
+                <p>If you have questions or need assistance:</p>
+                <ul>
+                    <li>Open an issue on GitHub with the <code>question</code> label</li>
+                    <li>Reach out to organizers during the OpenSource Camp event</li>
+                    <li>Join our communication channels (Discord/Slack - to be shared during the event)</li>
+                </ul>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h2>Ready to Contribute?</h2>
+                <p>
+                    Pick a tool, get the issue assigned, and start coding!
+                    Every contribution matters, no matter how small.
+                </p>
+                <a href="../index.html" class="btn">Browse Available Tools</a>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>OpenSource Camp - By ABV-IIITM IEEE Student Branch</p>
+    </footer>
+
+</body>
+
+</html>
