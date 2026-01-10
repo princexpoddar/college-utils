@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contributing Guidelines
+    url: https://github.com/princexpoddar/college-utils/blob/main/pages/contributing.html
+    about: Read our contributing guidelines before picking up an issue
