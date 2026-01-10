@@ -325,3 +325,163 @@ tr:hover {
 main {
   animation: fadeIn 0.6s ease-out;
 }
+
+
+
+
+.chat-input-wrapper {
+  position: relative;
+  max-width: 680px;
+  margin: 2rem auto;
+  padding: 0.6rem 0.7rem;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+.chat-input-wrapper input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.chat-input-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.chat-input-wrapper button {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #fcfcfd, #fafafb);
+  color: #070707;
+  font-size: 1.2rem;
+}
+
+.chat-input-wrapper button:hover {
+  transform: scale(1.05);
+}
+#todoList {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1rem;
+  list-style: none;
+}
+
+#todoList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.6rem;
+
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  color: #fff;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+#todoList li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+#todoList li span {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+#todoList li button {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 0.6rem;
+}
+
+#todoList li button:hover {
+  color: #ff6b6b;
+}
+
+
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.task-circle {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #aaa;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.task-circle.done {
+  background: #ccccd2;
+  border-color: #fefefe;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  color: #c6b9b9;
+}
+
+.task-actions {
+  position: relative;
+}
+
+.task-actions svg {
+  width: 20px;
+  cursor: pointer;
+}
+
+.task-menu {
+  position: absolute;
+  left: 28px;
+  top: 0;
+  background: #1f2937;
+  border-radius: 8px;
+  display: none;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.task-menu.show {
+  display: block;
+}
+
+.task-menu button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.task-menu button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+

@@ -12,7 +12,7 @@
 
     <header>
         <nav>
-            
+
             <div class="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -32,6 +32,7 @@
         </nav>
     </header>
 
+
     <main>
         <h1 class="page-title">My To-Do List</h1>
 
@@ -42,14 +43,108 @@
             3. Style completed tasks (e.g., strikethrough).
         -->
 
-        <div class="card text-center" style="max-width: 600px; margin: 2rem auto;">
+        <!-- <div class="card text-center" style="max-width: 600px; margin: 2rem auto;">
             <p style="color: var(--text-light); font-style: italic;">
                 The To-Do List is currently empty. <br>
                 <strong>Start coding here to build it!</strong>
             </p>
+        </div> -->
+
+
+        <div class="todo-app">
+            
+            <div id="todoContainer">
+                <ul id="todoList"></ul>
+            </div>
+
+            <div class="chat-input-wrapper">
+                <input type="text" id="taskInput" placeholder="Type your task here..." />
+                <button onclick="addTask()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                        <path fill-rule="evenodd"
+                            d="M8 14a.75.75 0 0 0 .75-.75V4.56l1.22 1.22a.75.75 0 1 0 1.06-1.06l-2.5-2.5a.75.75 0 0 0-1.06 0l-2.5 2.5a.75.75 0 0 0 1.06 1.06l1.22-1.22v8.69c0 .414.336.75.75.75Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+    <script>
+        function addTask() {
+            const input = document.getElementById("taskInput");
+            const list = document.getElementById("todoList");
+            const container = document.getElementById("todoContainer");
+
+            if (input.value.trim() === "") return;
+
+            const li = document.createElement("li");
+            li.innerHTML = `
+        <div class="task-left">
+            <span class="task-circle" onclick="toggleTask(this)"></span>
+            <span class="task-text">${input.value}</span>
         </div>
 
-    </main>
+        <div class="task-actions">
+            <svg onclick="openMenu(this)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+            </svg>
+
+            <div class="task-menu">
+                <button onclick="editTask(this)">Edit</button>
+                <button onclick="deleteTask(this)">Delete</button>
+            </div>
+        </div>
+    `;
+
+            list.appendChild(li);
+
+            requestAnimationFrame(() => {
+                container.scrollTop = container.scrollHeight;
+            });
+
+            input.value = "";
+        }
+        function toggleTask(circle) {
+            circle.classList.toggle("done");
+            const text = circle.nextElementSibling;
+            text.classList.toggle("completed");
+        }
+
+        let activeMenu = null;
+
+        function openMenu(icon) {
+            const menu = icon.nextElementSibling;
+
+            if (activeMenu && activeMenu !== menu) {
+                activeMenu.classList.remove("show");
+            }
+
+            menu.classList.toggle("show");
+            activeMenu = menu.classList.contains("show") ? menu : null;
+        }
+
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest(".task-actions")) {
+                if (activeMenu) activeMenu.classList.remove("show");
+                activeMenu = null;
+            }
+        });
+
+
+        function deleteTask(btn) {
+            btn.closest("li").remove();
+        }
+
+        function editTask(btn) {
+            const text = btn.closest("li").querySelector(".task-text");
+            const newText = prompt("Edit task:", text.innerText);
+            if (newText) text.innerText = newText;
+        }
+        document.getElementById("taskInput").addEventListener("keydown", e => {
+            if (e.key === "Enter") addTask();
+        });
+
+    </script>
 
 </body>
 
