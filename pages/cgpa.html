@@ -6,13 +6,258 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator - CollegeUtils</title>
     <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        /* --- STYLES --- */
+        
+        :root {
+            --primary-glow: rgba(251, 146, 60, 0.4);
+            --primary-color: #fb923c;
+            --card-glass: rgba(30, 30, 30, 0.85);
+            --input-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        .calculator-wrapper {
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+            padding: 0 1rem;
+        }
+
+        /* The Card */
+        .calc-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .calc-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            opacity: 0.7;
+        }
+
+        /* --- TOGGLE SWITCH --- */
+        .mode-toggle {
+            display: flex;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary-color);
+            color: #000;
+            box-shadow: 0 4px 12px rgba(251, 146, 60, 0.3);
+        }
+
+        /* Grid Headers */
+        .grid-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 40px;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 0 10px;
+        }
+
+        .grid-header.cgpa-mode {
+            grid-template-columns: 1fr 1fr 40px;
+        }
+
+        .header-label {
+            color: #888;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            user-select: none;
+        }
+
+        /* Row Animation */
+        .input-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 40px;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+            animation: slideIn 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .input-row.cgpa-row {
+            grid-template-columns: 1fr 1fr 40px;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Alive Inputs */
+        .styled-input {
+            width: 100%;
+            padding: 14px 16px;
+            background-color: var(--input-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .styled-input:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-glow);
+            transform: translateY(-1px);
+        }
+
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 2.5rem;
+        }
+
+        .btn {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-add {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccc;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-add:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: white;
+        }
+
+        .btn-calc {
+            background: linear-gradient(135deg, #fb923c, #ea580c);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
+        }
+
+        .btn-calc:hover {
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            background: transparent;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        /* Result Section */
+        .result-box {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            display: none; 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popUp {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .cgpa-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #fb923c, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 5px 0 15px 0;
+            filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.3));
+        }
+
+        /* Tab Display Logic */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .grid-header { display: none; }
+            .input-row {
+                grid-template-columns: 1fr; 
+                gap: 10px;
+                background: rgba(255,255,255,0.03);
+                padding: 15px;
+                border-radius: 12px;
+                position: relative;
+                border: 1px solid rgba(255,255,255,0.05);
+            }
+            .input-row.cgpa-row { grid-template-columns: 1fr; }
+            .btn-delete {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+            .btn-container { flex-direction: column; }
+        }
+    </style>
 </head>
 
 <body>
 
     <header>
         <nav>
-
             <div class="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -27,8 +272,7 @@
                 <span style="font-size: 1.5rem; font-weight: 700; color: #ffffff;">CollegeUtils</span>
             </div>
 
-            <!-- Mobile Menu Toggle -->
-            <div class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation menu">
+            <div class="mobile-menu-toggle" id="mobileMenuToggle">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -41,33 +285,177 @@
         </nav>
     </header>
 
-    <!-- Mobile Menu JavaScript -->
     <script src="../js/mobile-menu.js"></script>
 
-
     <main>
-        <h1 class="page-title">CGPA Calculator</h1>
+        <h1 class="page-title" style="text-align: center; margin: 3rem 0 2rem; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5);">CGPA Calculator</h1>
 
-        <!-- 
-            TODO for Contributors:
-            1. Create a form to accept Subject Names and Grades.
-            2. Add a 'Calculate' button.
-            3. Display the final SGPA/CGPA. 
-        -->
+        <div class="calculator-wrapper">
+            <div class="calc-card">
+                
+                <div class="mode-toggle">
+                    <button class="toggle-btn active" onclick="switchMode('sgpa')">Semester GPA</button>
+                    <button class="toggle-btn" onclick="switchMode('cgpa')">Cumulative GPA</button>
+                </div>
 
-        <div class="card text-center" style="max-width: 600px; margin: 2rem auto;">
-            <p style="color: var(--text-light); font-style: italic;">
-                The CGPA Calculator is currently empty. <br>
-                <strong>Claim this issue on GitHub and start building!</strong>
-            </p>
-            <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;">
-                Check the <a href="contributing.html" style="color: var(--primary-color);">Contributing Guidelines</a>
-                to get started.
+                <div id="sgpa-section" class="tab-content active">
+                    <div class="grid-header">
+                        <div class="header-label">Subject</div>
+                        <div class="header-label">Grade (1-10)</div>
+                        <div class="header-label">Credits</div>
+                        <div class="header-label"></div>
+                    </div>
+                    <div id="subject-list"></div>
+                    
+                    <div class="btn-container">
+                        <button class="btn btn-add" onclick="addRow('sgpa')">+ Add Subject</button>
+                        <button class="btn btn-calc" onclick="calculate('sgpa')">Calculate SGPA</button>
+                    </div>
+                </div>
+
+                <div id="cgpa-section" class="tab-content">
+                    <div class="grid-header cgpa-mode">
+                        <div class="header-label">Semester GPA</div>
+                        <div class="header-label">Semester Credits</div>
+                        <div class="header-label"></div>
+                    </div>
+                    <div id="semester-list"></div>
+
+                    <div class="btn-container">
+                        <button class="btn btn-add" onclick="addRow('cgpa')">+ Add Semester</button>
+                        <button class="btn btn-calc" onclick="calculate('cgpa')">Calculate CGPA</button>
+                    </div>
+                </div>
+
+                <div id="result-display" class="result-box">
+                    <p id="result-label" style="color: #aaa; margin: 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;">Calculated Result</p>
+                    <div class="cgpa-value" id="final-score">0.00</div>
+                    <p id="grade-message" style="color: #fff; font-size: 1.1rem; margin-bottom: 0;"></p>
+                </div>
+
+            </div>
+            
+            <p style="text-align: center; color: rgba(255,255,255,0.3); margin-top: 2rem; font-size: 0.8rem;">
+                Calculated via standard weighted average method
             </p>
         </div>
-
     </main>
 
-</body>
+    <script>
+        // --- LOGIC ---
 
+        function switchMode(mode) {
+            // Update Buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update Content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${mode}-section`).classList.add('active');
+
+            // Hide Result when switching
+            document.getElementById('result-display').style.display = 'none';
+        }
+
+        function addRow(type) {
+            const containerId = type === 'sgpa' ? 'subject-list' : 'semester-list';
+            const container = document.getElementById(containerId);
+            const div = document.createElement('div');
+            
+            div.className = type === 'sgpa' ? 'input-row' : 'input-row cgpa-row';
+            
+            if (type === 'sgpa') {
+                div.innerHTML = `
+                    <div><input type="text" class="styled-input" placeholder="e.g. Mathematics"></div>
+                    <div><input type="number" class="styled-input val-1" placeholder="10" min="0" max="10" step="0.1"></div>
+                    <div><input type="number" class="styled-input val-2" placeholder="4" min="1" max="20"></div>
+                    ${deleteButton()}
+                `;
+            } else {
+                div.innerHTML = `
+                    <div><input type="number" class="styled-input val-1" placeholder="SGPA (e.g. 8.5)" min="0" max="10" step="0.1"></div>
+                    <div><input type="number" class="styled-input val-2" placeholder="Total Credits (e.g. 24)" min="1" max="50"></div>
+                    ${deleteButton()}
+                `;
+            }
+            container.appendChild(div);
+        }
+
+        function deleteButton() {
+            return `
+                <button class="btn-delete" onclick="removeRow(this)" title="Remove Row">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            `;
+        }
+
+        function removeRow(button) {
+            const row = button.closest('.input-row');
+            // Check count based on parent container
+            const container = row.parentElement;
+            if (container.children.length > 1) {
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(20px)';
+                setTimeout(() => row.remove(), 250);
+            } else {
+                row.querySelectorAll('input').forEach(input => input.value = '');
+            }
+        }
+
+        function calculate(type) {
+            const containerId = type === 'sgpa' ? 'subject-list' : 'semester-list';
+            const rows = document.querySelectorAll(`#${containerId} .input-row`);
+            
+            let totalPoints = 0;
+            let totalCredits = 0;
+            let hasData = false;
+
+            rows.forEach(row => {
+                const v1 = parseFloat(row.querySelector('.val-1').value); // Grade or SGPA
+                const v2 = parseFloat(row.querySelector('.val-2').value); // Credits
+
+                if (!isNaN(v1) && !isNaN(v2)) {
+                    totalPoints += (v1 * v2);
+                    totalCredits += v2;
+                    hasData = true;
+                }
+            });
+
+            if (!hasData) {
+                alert("Please enter valid data!");
+                return;
+            }
+
+            const finalScore = (totalPoints / totalCredits).toFixed(2);
+            showResult(finalScore, type);
+        }
+
+        function showResult(score, type) {
+            const resultBox = document.getElementById('result-display');
+            const resultValue = document.getElementById('final-score');
+            const resultLabel = document.getElementById('result-label');
+            const message = document.getElementById('grade-message');
+
+            resultBox.style.display = 'none';
+            resultBox.offsetHeight; 
+            resultBox.style.display = 'block';
+            
+            resultValue.innerText = score;
+            resultLabel.innerText = type === 'sgpa' ? "Calculated SGPA" : "Calculated CGPA";
+
+            if(score >= 9) message.innerText = "Outstanding! 🚀";
+            else if(score >= 8) message.innerText = "Great job! 🔥";
+            else if(score >= 7) message.innerText = "Good work! 👍";
+            else message.innerText = "Keep pushing! 💪";
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            // initial rows
+            for(let i=0; i<3; i++) addRow('sgpa');
+            for(let i=0; i<3; i++) addRow('cgpa');
+        });
+    </script>
+
+</body>
 </html>
