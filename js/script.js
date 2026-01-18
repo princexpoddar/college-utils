@@ -1,9 +1,9 @@
 function calculateAttendance() {
-  let total = document.getElementById("total").value;
-  let attended = document.getElementById("attended").value;
+  let total = Number(document.getElementById("total").value);
+  let attended = Number(document.getElementById("attended").value);
   let result = document.getElementById("result");
 
-  if (total === "" || attended === "" || total <= 0 || attended < 0) {
+  if (isNaN(total) || isNaN(attended) || total <= 0 || attended < 0) {
     result.style.color = "red";
     result.innerText = "Please enter valid values!";
     return;
@@ -15,8 +15,7 @@ function calculateAttendance() {
     return;
   }
 
-  let percentage = (attended / total) * 100;
-  percentage = percentage.toFixed(2);
+  let percentage = ((attended / total) * 100).toFixed(2);
 
   if (percentage >= 75) {
     result.style.color = "green";
