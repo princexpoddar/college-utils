@@ -603,4 +603,28 @@ main {
     width: 100%;
     text-align: center;
   }
+  .input {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  background: #4a63ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #3548d4;
+}
+
+#result {
+  margin-top: 15px;
+  font-weight: bold;
+}
 }
